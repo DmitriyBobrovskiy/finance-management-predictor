@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using finance_management_backend.Infrastructure;
 using finance_management_backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace finance_management_backend
 {
@@ -27,6 +23,9 @@ namespace finance_management_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var settings = ReadSettings();
+            Console.WriteLine(settings.ConnectionString);
+            services.AddSingleton(settings);
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
@@ -52,6 +51,21 @@ namespace finance_management_backend
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static Settings ReadSettings()
+        {
+            Console.WriteLine("Reading `.env` file and environment variables");
+            try
+            {
+                DotNetEnv.Env.Load();
+            }
+            catch (FileNotFoundException exception)
+            {
+                Console.WriteLine($"Cannot find configuration file  '{exception.FileName}'");
+                Console.WriteLine("Will use only environment variables");
+            }
+            return new Settings();
         }
     }
 }
