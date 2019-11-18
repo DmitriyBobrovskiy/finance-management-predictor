@@ -4,11 +4,10 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
-WORKDIR /src
-COPY ["finance-management-backend/finance-management-backend.csproj", "finance-management-backend/"]
-RUN dotnet restore "finance-management-backend/finance-management-backend.csproj"
+WORKDIR /app
+COPY finance-management-backend.csproj .
+RUN dotnet restore
 COPY . .
-WORKDIR "/src/finance-management-backend"
 RUN dotnet build "finance-management-backend.csproj" -c Release -o /app/build
 
 FROM build AS publish

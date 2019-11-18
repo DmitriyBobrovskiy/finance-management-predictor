@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  finance-management-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "5001:5001"
+    depends_on: 
+      - postgres
+    networks: 
+      - compose-network
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Postgres2019!"
+    ports:
+      - "5432:5432"
+    networks: 
+      - compose-network
+  pgadmin:
+    image: dpage/pgadmin4
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: "admin@financemanagement.com"
+      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"
+    ports:
+      - "1234:80"
+    depends_on: 
+      - postgres
+    networks: 
+      - compose-network
+
+networks:
+  compose-network:
+    driver: bridge
