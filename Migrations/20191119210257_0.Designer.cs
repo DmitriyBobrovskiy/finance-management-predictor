@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using finance_management_backend.Models;
@@ -9,9 +10,10 @@ using finance_management_backend.Models;
 namespace finance_management_backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191119210257_0")]
+    partial class _0
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,10 +28,10 @@ namespace finance_management_backend.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AccountTypeId")
+                    b.Property<int?>("AccountTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("CurrencyId")
+                    b.Property<int?>("CurrencyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -126,16 +128,16 @@ namespace finance_management_backend.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("CounterpartId")
+                    b.Property<int?>("CounterpartId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Date")
@@ -147,7 +149,7 @@ namespace finance_management_backend.Migrations
                     b.Property<int?>("LoanTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TransactionTypeId")
+                    b.Property<int?>("TransactionTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -184,36 +186,26 @@ namespace finance_management_backend.Migrations
                 {
                     b.HasOne("finance_management_backend.Models.AccountType", "AccountType")
                         .WithMany()
-                        .HasForeignKey("AccountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountTypeId");
 
                     b.HasOne("finance_management_backend.Models.Currency", "Currency")
                         .WithMany()
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CurrencyId");
                 });
 
             modelBuilder.Entity("finance_management_backend.Models.Transaction", b =>
                 {
                     b.HasOne("finance_management_backend.Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("finance_management_backend.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("finance_management_backend.Models.Counterpart", "Counterpart")
                         .WithMany()
-                        .HasForeignKey("CounterpartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CounterpartId");
 
                     b.HasOne("finance_management_backend.Models.LoanType", "LoanType")
                         .WithMany()
@@ -221,9 +213,7 @@ namespace finance_management_backend.Migrations
 
                     b.HasOne("finance_management_backend.Models.TransactionType", "TransactionType")
                         .WithMany()
-                        .HasForeignKey("TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TransactionTypeId");
                 });
 #pragma warning restore 612, 618
         }

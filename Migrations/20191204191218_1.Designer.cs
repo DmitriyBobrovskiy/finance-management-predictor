@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using finance_management_backend.Models;
@@ -9,9 +10,10 @@ using finance_management_backend.Models;
 namespace finance_management_backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191204191218_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,7 +146,7 @@ namespace finance_management_backend.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int?>("LoanTypeId")
+                    b.Property<int>("LoanTypeId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TransactionTypeId")
@@ -217,7 +219,9 @@ namespace finance_management_backend.Migrations
 
                     b.HasOne("finance_management_backend.Models.LoanType", "LoanType")
                         .WithMany()
-                        .HasForeignKey("LoanTypeId");
+                        .HasForeignKey("LoanTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("finance_management_backend.Models.TransactionType", "TransactionType")
                         .WithMany()

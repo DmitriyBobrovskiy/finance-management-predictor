@@ -28,7 +28,7 @@ namespace finance_management_backend
             services.AddSingleton(settings);
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(settings.ConnectionString);
             });
             services.AddControllers();
         }

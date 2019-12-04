@@ -6,11 +6,15 @@ services:
       context: .
       dockerfile: Dockerfile
     environment: 
-      - CONNECTION_STRING=Host=postgres;Port=5432;Username=postgres;Password=Postgres2019!;Database=FinanceManagement;
-      - ASPNETCORE_ENVIRONMENT=Development
+      HOST: "postgres"
+      PORT: "5432"
+      USERNAME: "postgres"
+      PASSWORD: "Postgres2019!"
+      DATABASE: "FinanceManagement"
+      ASPNETCORE_ENVIRONMENT: "Development"
     ports:
-      - "80:80"
-      - "5001:5001"
+      - "63732:63732"
+      - "44374:44374"
     depends_on: 
       - postgres
     networks: 
