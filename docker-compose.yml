@@ -13,7 +13,7 @@ services:
       DATABASE: "FinanceManagement"
       ASPNETCORE_ENVIRONMENT: "Development"
     ports:
-      - "63732:63732"
+      - "63732:80"
       - "44374:44374"
     depends_on: 
       - postgres
@@ -28,7 +28,7 @@ services:
     networks: 
       - compose-network
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     environment: 
       PGADMIN_DEFAULT_EMAIL: "admin@financemanagement.com"
       PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"

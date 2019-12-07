@@ -11,14 +11,12 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "finance_management_backend": {
       "commandName": "Project",
-      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -26,9 +24,8 @@
     },
     "Docker": {
       "commandName": "Project",
-      "launchBrowser": false,
       "environmentVariables": {
-        "ASPNETCORE_URLS": "https://+:443;http://+:80",
+        "ASPNETCORE_URLS": "https://+:44374;http://+:63732",
         "ASPNETCORE_HTTPS_PORT": "44374"
       },
       "httpPort": 63732,
