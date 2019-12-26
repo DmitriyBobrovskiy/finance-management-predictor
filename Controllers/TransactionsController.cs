@@ -26,6 +26,7 @@ namespace finance_management_backend.Controllers
         {
             var result = _context.Transactions
                 .Include(transaction => transaction.Category)
+                    .ThenInclude(category => category.Icon)
                 .Include(transaction => transaction.Counterpart)
                 .Include(transaction => transaction.LoanType)
                 .Include(transaction => transaction.TransactionType)

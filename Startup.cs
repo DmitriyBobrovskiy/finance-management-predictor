@@ -30,6 +30,8 @@ namespace finance_management_backend
             {
                 options.UseNpgsql(settings.ConnectionString);
             });
+            // TODO: setup cors in a right way
+            services.AddCors();
             services.AddControllers();
         }
 
@@ -41,11 +43,17 @@ namespace finance_management_backend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            // TODO: setup cors in a right way
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+            });
 
             app.UseEndpoints(endpoints =>
             {

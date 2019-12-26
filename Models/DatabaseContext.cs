@@ -15,6 +15,7 @@ namespace finance_management_backend.Models
         public DbSet<LoanType> LoanTypes { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
+        public DbSet<Icon> Icons { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
@@ -44,9 +45,9 @@ namespace finance_management_backend.Models
             LoanTypes.RemoveRange(LoanTypes);
             Transactions.RemoveRange(Transactions);
             TransactionTypes.RemoveRange(TransactionTypes);
+            Icons.RemoveRange(Icons);
             SaveChanges();
 
-            var random = new Random();
             var accountTypes = new List<AccountType>
             {
                 new AccountType { Title= "Наличные" },
@@ -73,7 +74,7 @@ namespace finance_management_backend.Models
                 "Юани оставшиеся с поездки",
             };
 
-            var accounts = Enumerable.Range(1, random.Next(15)).Select(index =>
+            var accounts = Enumerable.Range(1, GetRandomValue(15)).Select(index =>
             {
                 return new Account
                 {
@@ -84,14 +85,18 @@ namespace finance_management_backend.Models
             });
             AddRange(accounts);
 
+            // TODO: there are much more icons in TempData file
+            var icons = TempData.Icons.Take(20).Select(icon => new Icon { Tag = icon });
+            AddRange(icons);
+
             var categories = new List<Category>
             {
-                new Category { Title = "Свободные" },
-                new Category { Title = "Продукты" },
-                new Category { Title = "Здоровье" },
-                new Category { Title = "Дети" },
-                new Category { Title = "Животные" },
-                new Category { Title = "Автомобиль" },
+                new Category { Title = "Свободные", Icon = icons.GetAny() },
+                new Category { Title = "Продукты", Icon = icons.GetAny() },
+                new Category { Title = "Здоровье", Icon = icons.GetAny() },
+                new Category { Title = "Дети", Icon = icons.GetAny() },
+                new Category { Title = "Животные", Icon = icons.GetAny() },
+                new Category { Title = "Автомобиль", Icon = icons.GetAny() },
             };
             AddRange(categories);
 
@@ -104,10 +109,10 @@ namespace finance_management_backend.Models
 
             var transactionTypes = new List<TransactionType>
             {
-                new TransactionType { Title = "Расход" },
-                new TransactionType { Title = "Приход" },
-                new TransactionType { Title = "Перевод между счетами" },
-                new TransactionType { Title = "Долг" },
+                new TransactionType { Id = 1, Title = "Расход" },
+                new TransactionType { Id = 2, Title = "Приход" },
+                new TransactionType { Id = 3, Title = "Перевод между счетами" },
+                new TransactionType { Id = 4, Title = "Долг" },
             };
             AddRange(transactionTypes);
 
@@ -127,12 +132,12 @@ namespace finance_management_backend.Models
             AddRange(counterparts);
 
 
-            var transactions = Enumerable.Range(1, random.Next(1000)).Select(index =>
+            var transactions = Enumerable.Range(1, GetRandomValue(1000)).Select(index =>
             {
                 var transaction = new Transaction
                 {
                     Account = accounts.GetAny(),
-                    Amount = random.Next(10000),
+                    Amount = GetRandomValue(10000),
                     Category = categories.GetAny(),
                     Counterpart = counterparts.GetAny(),
                     Date = DateTime.Now.AddMinutes(new Random().Next(-100000, 0)),
@@ -149,6 +154,9 @@ namespace finance_management_backend.Models
 
             SaveChanges();
         }
+
+        private int GetRandomValue(int max)
+            => new Random().Next(1, max);
     }
 
     internal static class Extensions
