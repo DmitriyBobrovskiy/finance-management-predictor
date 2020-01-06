@@ -19,6 +19,22 @@ services:
       - postgres
     networks: 
       - compose-network
+  jupyter-notebook:
+    build:
+      context: ./jupyter
+      dockerfile: Dockerfile
+    environment: 
+      HOST: "postgres"
+      PORT: "5432"
+      USERNAME: "postgres"
+      PASSWORD: "Postgres2019!"
+      DATABASE: "FinanceManagement"
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - postgres
+    networks: 
+      - compose-network
   postgres:
     image: postgres
     environment:
