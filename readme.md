@@ -1,6 +1,6 @@
 
-#Run project
-###docker-compose.yml
+# Run project
+### docker-compose.yml
 
 just put this part into your docker-compose.yml as another one service
 ```
