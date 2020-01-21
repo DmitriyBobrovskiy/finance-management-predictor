@@ -1,8 +1,9 @@
 FROM python:3.7
 WORKDIR /
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5000
 
 COPY . .
+RUN python3 -m pip install --upgrade pip
 RUN pip install -r requirements
-CMD python app.py
+RUN env FLASK_APP=app.py
+CMD python3 app.py
