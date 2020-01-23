@@ -1,8 +1,8 @@
 
-# Run project
+# Разворачивание проекта
 ### docker-compose.yml
 
-just put this part into your docker-compose.yml as another one service
+Добавьте еще один серсвис в docker-compose.yml
 ```
 ds:
   build:
@@ -22,6 +22,33 @@ ds:
   networks: 
     - compose-network
 ```
+
+Для сборки контейнерия вы полните код в каталоге с Dockerfile:
+docker build -t <image_name> .
+где:
+- docker build - команда для генерации образа контейнера
+- -t - ключ для указания названия имени образа контейнера
+- image_name - спецефичное имя образа контейнера
+- . - текущий каталог в котором лежит файл Dockerfile
+
+# Выполнение запросов
+
+http://0.0.0.0:5000/getPrediction?periods_analyze=10?TransactionTypeId=1?periods_return=3?b=0.4?k=0.4
+- periods_analyze - количество строк в бд для анализа
+- TransactionTypeId - тип транзакции
+- periods_return - ожидаемое количество прогнозов
+- b - коэффициент сглаживания ряда
+- k - коэффициент сглаживания тренда
+
+Значения по умолчанию:
+
+| Параметр      | Значение |
+| --------- | -----:|
+| periods_analyze  | 100 |
+| TransactionTypeId  | 1 |
+| periods_return  | 1 |
+| b  | 0.1 |
+| k  | 0.2 |
 
 # Экспоненциально-сглаженный ряд
 
