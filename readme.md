@@ -23,8 +23,8 @@ ds:
     - compose-network
 ```
 
-Для сборки контейнерия вы полните код в каталоге с Dockerfile:
-docker build -t <image_name> .
+Для сборки контейнерия вы полните код в каталоге с Dockerfile:<br/>
+docker build -t <image_name> .<br/>
 где:
 - docker build - команда для генерации образа контейнера
 - -t - ключ для указания названия имени образа контейнера
