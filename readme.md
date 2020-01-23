@@ -33,7 +33,7 @@ docker build -t <image_name> .<br/>
 
 # Выполнение запросов
 
-http://0.0.0.0:5000/getPrediction?periods_analyze=10?TransactionTypeId=1?periods_return=3?b=0.4?k=0.4
+http://0.0.0.0:5000/getPrediction?periods_analyze=31210&TransactionTypeId=1&periods_return=3&b=0.4&k=0.4
 - periods_analyze - количество строк в бд для анализа
 - TransactionTypeId - тип транзакции
 - periods_return - ожидаемое количество прогнозов
