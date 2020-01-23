@@ -9,11 +9,11 @@ app = Flask(__name__)
 
 @app.route('/getPrediction')
 def getPrediction():
-	periods_analyze, TransactionTypeId, periods_return, TransactionTypeId, b, k = generate_parameters(request)
+	periods_analyze, TransactionTypeId, periods_return, b, k = generate_parameters(request)
 	engine = connect_db()
 	df, res_pd = create_df(TransactionTypeId, engine)
 	predict_list = predict_generator(b, k, df, res_pd,periods_analyze, periods_return)
-	return jsonify(generate_parameters(request))
+	return jsonify(predict_list)
 
 def generate_parameters(request):
 	periods_analyze = np.int64(request.args.get('periods_analyze', 100))
@@ -21,7 +21,7 @@ def generate_parameters(request):
 	TransactionTypeId = np.int64(request.args.get('TransactionTypeId', 1))
 	b = np.float128(request.args.get('b', 0.1))
 	k = np.float128(request.args.get('k', 0.2))
-	return(periods_analyze, TransactionTypeId, periods_return, TransactionTypeId, b, k)
+	return(periods_analyze, TransactionTypeId, periods_return, b, k)
 
 def create_df(TransactionTypeId, engine):
 	#запрос таблицы в бд
