@@ -11,8 +11,8 @@ app = Flask(__name__)
 def getPrediction():
     periods_analyze, transaction_type_id, periods_return, b, k = generate_parameters(
         request)
-    engine = connect_db()
-    transactions, analyzed_transactions = create_database_connection(transaction_type_id, engine)
+    connection = get_database_connection()
+    transactions, analyzed_transactions = get_transactions(transaction_type_id, connection)
     predict_list = predict_generator(
         b, k, transactions, analyzed_transactions, periods_analyze, periods_return)
     return jsonify(predict_list)
@@ -27,8 +27,8 @@ def generate_parameters(request):
     return(periods_analyze, transaction_type_id, periods_return, b, k)
 
 
-def create_database_connection(transaction_type_id, engine):
-    transactions = read_sql_table('Transactions', con=engine)
+def get_transactions(transaction_type_id, connection):
+    transactions = read_sql_table('Transactions', con=connection)
 
     transactions = transactions.sort_values('Date')
     transactions = transactions.query(
@@ -65,7 +65,7 @@ def predict_generator(b, k, transactions, analyzed_transactions, periods_analyze
     return predict_list
 
 
-def connect_db():
+def get_database_connection():
     env_connection_data = {
         'database_vendor': getenv('DATABASE_VENDOR'),
         'host': getenv('HOST'),
