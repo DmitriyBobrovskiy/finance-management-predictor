@@ -1,13 +1,16 @@
-
-# Разворачивание проекта
-### docker-compose.yml
-
-Добавьте еще один серсвис в docker-compose.yml
+# Build project
+### Build docker image
+Execute next commands
+```bash
+cd <project_root>
+docker build --tag predictor --file Dockerfile .
 ```
-ds:
-  build:
-    context: ./ds
-    dockerfile: Dockerfile
+
+### Change docker compose
+Put this code to your backend docker-compose.yml as another one service
+```
+predictor:
+  image: predictor
   environment: 
     DATABASE_VENDOR: "postgresql"
     HOST: "postgres"
@@ -22,14 +25,6 @@ ds:
   networks: 
     - compose-network
 ```
-
-Для сборки контейнерия вы полните код в каталоге с Dockerfile:<br/>
-docker build -t <image_name> .<br/>
-где:
-- docker build - команда для генерации образа контейнера
-- -t - ключ для указания названия имени образа контейнера
-- image_name - спецефичное имя образа контейнера
-- . - текущий каталог в котором лежит файл Dockerfile
 
 # Выполнение запросов
 
